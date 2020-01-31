@@ -1,0 +1,30 @@
+%exp 1.3£ºRobertËã×Ó×÷±ßÔµ¼ì²â
+clear;
+fid = fopen('Eimage-007.img','rb'); 
+    C=fread(fid,65536,'float64');
+fclose(fid);
+for i=1:256
+    for j=1:256
+        A(i,j)=C((i-1)*256+j);  
+    end
+end
+%A=A';
+[n,m]=size(A);
+%Ä£°å
+H1=[1 0;0 -1];
+H2=[0 1;-1 0];
+%¾í»ý
+for i=1:n-1
+    for j=1:m-1
+        B(i,j)=abs(A(i,j)-A(i+1,j+1))+abs(A(i,j)-A(i,j+1));
+    end
+end
+
+%ÏÔÊ¾Í¼Ïñ
+maxmax=max(max(A));
+minmin=min(min(A));
+
+imshow(A,[minmin,maxmax]);title('Ô­Í¼');
+figure;
+imshow(uint8(B));
+
